@@ -1,30 +1,32 @@
-﻿using Xunit;
-using Moq;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using RegistrationPeople.Application.Services;
+using Moq;
 using RegistrationPeople.Application.DTOs;
+using RegistrationPeople.Application.Services;
 using RegistrationPeople.Domain.Entities;
 using RegistrationPeople.Domain.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 public class AuthServiceTest
 {
-    private readonly Mock<IPersonRepository> _personRepoMock;
-    private readonly Mock<IConfiguration> _configMock;
+    private readonly Mock<IPersonRepository> _personRepositoryMock;
+    private readonly Mock<IConfiguration> _configurationMock;
     private readonly AuthService _authService;
 
     public AuthServiceTest()
     {
-        _personRepoMock = new Mock<IPersonRepository>();
-        _configMock = new Mock<IConfiguration>();
+        _personRepositoryMock = new Mock<IPersonRepository>();
+        _configurationMock = new Mock<IConfiguration>();
 
-        // Mock do token JWT
-        _configMock.Setup(c => c["Jwt:Key"]).Returns("supersecretkey1234567890");
+        // Setup do IConfiguration para retornar valores do JWT
+        _configurationMock.Setup(c => c["Jwt:Key"]).Returns("ThisIsASecretKeyForJwt1234");
+        _configurationMock.Setup(c => c["Jwt:Issuer"]).Returns("TestIssuer");
+        _configurationMock.Setup(c => c["Jwt:Audience"]).Returns("TestAudience");
 
-        _authService = new AuthService(_personRepoMock.Object, _configMock.Object);
+        _authService = new AuthService(_personRepositoryMock.Object, _configurationMock.Object);
     }
 
     [Fact]
@@ -32,90 +34,156 @@ public class AuthServiceTest
     {
         var loginDto = new LoginDto { Email = "admin@admin.com", Password = "admin" };
 
-        var result = await _authService.LoginAsync(loginDto);
+        var token = await _authService.LoginAsync(loginDto);
 
-        Assert.NotNull(result);
-        Assert.IsType<string>(result);
+        Assert.NotNull(token);
+        Assert.False(AuthService.IsJwtExpired(token));
     }
 
     [Fact]
     public async Task LoginAsync_WithValidUser_ReturnsToken()
     {
-        var password = "test123";
-        var hashed = BCrypt.Net.BCrypt.HashPassword(password);
-
+        var password = "mypassword";
+        var passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
         var person = new Person
         {
             Id = Guid.NewGuid(),
             Name = "Test User",
-            Email = "test@example.com",
-            PasswordHash = hashed
+            Email = "user@test.com",
+            PasswordHash = passwordHash
         };
 
-        _personRepoMock.Setup(r => r.GetByEmailAsync(person.Email)).ReturnsAsync(person);
+        _personRepositoryMock.Setup(r => r.GetByEmailAsync(person.Email))
+                             .ReturnsAsync(person);
 
         var loginDto = new LoginDto { Email = person.Email, Password = password };
 
-        var result = await _authService.LoginAsync(loginDto);
+        var token = await _authService.LoginAsync(loginDto);
 
-        Assert.NotNull(result);
-        Assert.IsType<string>(result);
+        Assert.NotNull(token);
+        Assert.False(AuthService.IsJwtExpired(token));
     }
 
     [Fact]
     public async Task LoginAsync_WithInvalidPassword_ReturnsNull()
     {
+        var passwordHash = BCrypt.Net.BCrypt.HashPassword("correctpassword");
         var person = new Person
         {
             Id = Guid.NewGuid(),
             Name = "Test User",
-            Email = "test@example.com",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("correctPassword")
+            Email = "user@test.com",
+            PasswordHash = passwordHash
         };
 
-        _personRepoMock.Setup(r => r.GetByEmailAsync(person.Email)).ReturnsAsync(person);
+        _personRepositoryMock.Setup(r => r.GetByEmailAsync(person.Email))
+                             .ReturnsAsync(person);
 
-        var loginDto = new LoginDto { Email = person.Email, Password = "wrongPassword" };
+        var loginDto = new LoginDto { Email = person.Email, Password = "wrongpassword" };
 
-        var result = await _authService.LoginAsync(loginDto);
+        var token = await _authService.LoginAsync(loginDto);
 
-        Assert.Null(result);
+        Assert.Null(token);
     }
 
     [Fact]
-    public async Task RegisterAsync_WithUniqueEmail_ReturnsSuccess()
+    public async Task LoginAsync_WithNonExistentUser_ReturnsNull()
     {
-        var registerDto = new RegisterPersonDto
-        {
-            Name = "Test User",
-            Email = "newuser@example.com",
-            Password = "123456"
-        };
+        _personRepositoryMock.Setup(r => r.GetByEmailAsync(It.IsAny<string>()))
+                             .ReturnsAsync((Person?)null);
 
-        _personRepoMock.Setup(r => r.GetByEmailAsync(registerDto.Email)).ReturnsAsync((Person)null!);
-        _personRepoMock.Setup(r => r.InsertAsync(It.IsAny<Person>())).Returns((Task<Person>)Task.CompletedTask);
+        var loginDto = new LoginDto { Email = "nonexistent@test.com", Password = "password" };
 
-        var result = await _authService.RegisterAsync(registerDto);
+        var token = await _authService.LoginAsync(loginDto);
 
-        Assert.True(result.Succeeded);
+        Assert.Null(token);
     }
 
     [Fact]
-    public async Task RegisterAsync_WithDuplicateEmail_ReturnsFailure()
+    public async Task RegisterAsync_WithDuplicateEmail_ReturnsFailedIdentityResult()
     {
-        var registerDto = new RegisterPersonDto
+        var existingPerson = new Person
         {
-            Name = "Test User",
-            Email = "duplicate@example.com",
-            Password = "123456"
+            Id = Guid.NewGuid(),
+            Email = "duplicate@test.com"
         };
 
-        _personRepoMock.Setup(r => r.GetByEmailAsync(registerDto.Email))
-            .ReturnsAsync(new Person { Email = registerDto.Email });
+        _personRepositoryMock.Setup(r => r.GetByEmailAsync(existingPerson.Email))
+                             .ReturnsAsync(existingPerson);
+
+        var registerDto = new RegisterPersonDto
+        {
+            Email = existingPerson.Email,
+            Name = "Duplicate User",
+            Cpf = "12345678901",
+            Password = "password"
+        };
 
         var result = await _authService.RegisterAsync(registerDto);
 
         Assert.False(result.Succeeded);
         Assert.Contains(result.Errors, e => e.Code == "DuplicateEmail");
+    }
+
+    [Fact]
+    public async Task RegisterAsync_WithNewEmail_ReturnsSuccess()
+    {
+        _personRepositoryMock.Setup(r => r.GetByEmailAsync(It.IsAny<string>()))
+                             .ReturnsAsync((Person?)null);
+
+        _personRepositoryMock.Setup(r => r.InsertAsync(It.IsAny<Person>()))
+                             .Returns((Task<Person>)Task.CompletedTask)
+                             .Verifiable();
+
+        var registerDto = new RegisterPersonDto
+        {
+            Email = "newuser@test.com",
+            Name = "New User",
+            Cpf = "12345678905",
+            Password = "password"
+        };
+
+        var result = await _authService.RegisterAsync(registerDto);
+
+        Assert.True(result.Succeeded);
+        _personRepositoryMock.Verify(r => r.InsertAsync(It.IsAny<Person>()), Times.Once);
+    }
+
+    [Fact]
+    public void IsJwtExpired_WithExpiredToken_ReturnsTrue()
+    {
+        // Criar token expirado manualmente para teste
+        var token = CreateJwtToken(DateTime.UtcNow.AddMinutes(-10));
+
+        var isExpired = AuthService.IsJwtExpired(token);
+
+        Assert.True(isExpired);
+    }
+
+    [Fact]
+    public void IsJwtExpired_WithValidToken_ReturnsFalse()
+    {
+        var token = CreateJwtToken(DateTime.UtcNow.AddMinutes(10));
+
+        var isExpired = AuthService.IsJwtExpired(token);
+
+        Assert.False(isExpired);
+    }
+
+    private string CreateJwtToken(DateTime expires)
+    {
+        var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+        var key = Encoding.UTF8.GetBytes("ThisIsASecretKeyForJwt1234");
+        var tokenDescriptor = new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor
+        {
+            Expires = expires,
+            SigningCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(
+                new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(key),
+                Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature
+            )
+        };
+
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
     }
 }

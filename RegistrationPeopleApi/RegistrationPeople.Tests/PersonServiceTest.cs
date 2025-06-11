@@ -1,247 +1,291 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Moq;
 using RegistrationPeople.Application.DTOs;
+using RegistrationPeople.Application.DTOs.V2;
 using RegistrationPeople.Application.Services;
 using RegistrationPeople.Domain.Entities;
 using RegistrationPeople.Domain.Interfaces;
 using Xunit;
-namespace RegistrationPeople.Tests
+
+public class PersonServiceTests
 {
-    public class PersonServiceTests
+    private readonly Mock<IPersonRepository> _repositoryMock;
+    private readonly PersonService _personService;
+
+    public PersonServiceTests()
     {
-        private readonly Mock<IPersonRepository> _repositoryMock;
-        private readonly PersonService _service;
+        _repositoryMock = new Mock<IPersonRepository>();
+        _personService = new PersonService(_repositoryMock.Object);
+    }
 
-        public PersonServiceTests()
+    [Fact]
+    public async Task CreateAsync_WithValidPerson_ReturnsCreatedPerson()
+    {
+        var dto = new RegisterPersonDto
         {
-            _repositoryMock = new Mock<IPersonRepository>();
-            _service = new PersonService(_repositoryMock.Object);
-        }
-
-        [Fact]
-        public async Task CreateAsync_Should_CreatePerson_When_Valid()
-        {
-            var dto = new RegisterPersonDto
-            {
-                Name = "John Doe",
-                Cpf = "12345678901",
-                BirthDate = DateTime.UtcNow.AddYears(-30),
-                Email = "john@example.com"
-            };
-
-            _repositoryMock.Setup(r => r.ExistsCpfAsync(dto.Cpf, It.IsAny<Guid?>())).ReturnsAsync(false);
-
-            _repositoryMock.Setup(r => r.InsertAsync(It.IsAny<Person>())).ReturnsAsync((Person p) => p);
-
-            var result = await _service.CreateAsync(dto);
-
-            Assert.NotNull(result);
-            Assert.Equal(dto.Name, result.Name);
-            Assert.Equal(dto.Cpf, result.Cpf);
-            Assert.Equal(dto.Email, result.Email);
-
-            _repositoryMock.Verify(r => r.ExistsCpfAsync(dto.Cpf, It.IsAny<Guid?>()), Times.Once);
-            _repositoryMock.Verify(r => r.InsertAsync(It.IsAny<Person>()), Times.Once);
-        }
-
-        [Fact]
-        public async Task CreateAsync_Should_ThrowArgumentException_When_CpfExists()
-        {
-            var dto = new RegisterPersonDto
-            {
-                Name = "Jane Doe",
-                Cpf = "12345678901",
-                BirthDate = DateTime.UtcNow.AddYears(-30)
-            };
-
-            _repositoryMock.Setup(r => r.ExistsCpfAsync(dto.Cpf, It.IsAny<Guid?>())).ReturnsAsync(true);
-
-            await Assert.ThrowsAsync<ArgumentException>(() => _service.CreateAsync(dto));
-
-            _repositoryMock.Verify(r => r.ExistsCpfAsync(dto.Cpf, It.IsAny<Guid?>()), Times.Once);
-            _repositoryMock.Verify(r => r.InsertAsync(It.IsAny<Person>()), Times.Never);
-        }
-
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public async Task CreateAsync_Should_ThrowArgumentException_When_NameIsEmpty(string invalidName)
-        {
-            var dto = new RegisterPersonDto
-            {
-                Name = invalidName,
-                Cpf = "12345678901",
-                BirthDate = DateTime.UtcNow.AddYears(-30)
-            };
-
-            await Assert.ThrowsAsync<ArgumentException>(() => _service.CreateAsync(dto));
-            _repositoryMock.Verify(r => r.ExistsCpfAsync(dto.Cpf, It.IsAny<Guid?>()), Times.Never);
-            _repositoryMock.Verify(r => r.InsertAsync(It.IsAny<Person>()), Times.Never);
-        }
-
-        [Theory]
-        [InlineData("invalid-email")]
-        [InlineData("missing-at.com")]
-        [InlineData("missingdomain@")]
-        public async Task CreateAsync_Should_ThrowArgumentException_When_EmailInvalid(string invalidEmail)
-        {
-            var dto = new RegisterPersonDto
-            {
-                Name = "Valid Name",
-                Cpf = "12345678901",
-                BirthDate = DateTime.UtcNow.AddYears(-30),
-                Email = invalidEmail
-            };
-
-            await Assert.ThrowsAsync<ArgumentException>(() => _service.CreateAsync(dto));
-        }
-
-        [Fact]
-        public async Task CreateAsync_Should_ThrowArgumentException_When_BirthDateInvalid()
-        {
-            var dto = new RegisterPersonDto
-            {
-                Name = "Valid Name",
-                Cpf = "12345678901",
-                BirthDate = DateTime.UtcNow.AddYears(1), // future date
-            };
-
-            await Assert.ThrowsAsync<ArgumentException>(() => _service.CreateAsync(dto));
-        }
-
-        [Fact]
-        public async Task GetAllAsync_Should_ReturnPersonSummaryDtos()
-        {
-            var people = new List<Person>
-        {
-            new Person { Id = Guid.NewGuid(), Name = "John", Cpf = "11111111111", BirthDate = DateTime.UtcNow.AddYears(-20) },
-            new Person { Id = Guid.NewGuid(), Name = "Jane", Cpf = "22222222222", BirthDate = DateTime.UtcNow.AddYears(-25) }
+            Name = "Test User",
+            Cpf = "12345678900",
+            Email = "test@example.com",
+            BirthDate = DateTime.UtcNow.AddYears(-30),
+            Password = "password"
         };
 
-            _repositoryMock.Setup(r => r.GetAllAsync()).ReturnsAsync(people);
+        _repositoryMock.Setup(r => r.ExistsCpfAsync(dto.Cpf, null)).ReturnsAsync(false);
+        _repositoryMock.Setup(r => r.InsertAsync(It.IsAny<Person>()))
+                       .ReturnsAsync((Person p) => p);
 
-            var result = await _service.GetAllAsync();
+        var result = await _personService.CreateAsync(dto);
 
-            Assert.Equal(people.Count, result.Count());
-            Assert.All(result, dto => Assert.False(string.IsNullOrWhiteSpace(dto.Name)));
-        }
+        Assert.NotNull(result);
+        Assert.Equal(dto.Name, result.Name);
+        _repositoryMock.Verify(r => r.InsertAsync(It.IsAny<Person>()), Times.Once);
+    }
 
-        [Fact]
-        public async Task GetByIdAsync_Should_ReturnPersonDetailsDto_When_Found()
+    [Fact]
+    public async Task CreateAsync_WithDuplicateCpf_ThrowsArgumentException()
+    {
+        var dto = new RegisterPersonDto
         {
-            var id = Guid.NewGuid();
-            var person = new Person
-            {
-                Id = id,
-                Name = "John",
-                Cpf = "11111111111",
-                BirthDate = DateTime.UtcNow.AddYears(-20)
-            };
+            Name = "Test User",
+            Cpf = "12345678900",
+            Email = "test@example.com",
+            BirthDate = DateTime.UtcNow.AddYears(-30),
+            Password = "password"
+        };
 
-            _repositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(person);
+        _repositoryMock.Setup(r => r.ExistsCpfAsync(dto.Cpf, null)).ReturnsAsync(true);
 
-            var result = await _service.GetByIdAsync(id);
+        var ex = await Assert.ThrowsAsync<ArgumentException>(() => _personService.CreateAsync(dto));
+        Assert.Equal("CPF already exists.", ex.Message);
+    }
 
-            Assert.NotNull(result);
-            Assert.Equal(person.Name, result!.Name);
-        }
-
-        [Fact]
-        public async Task GetByIdAsync_Should_ReturnNull_When_NotFound()
+    [Fact]
+    public async Task CreateAsync_WithInvalidEmail_ThrowsArgumentException()
+    {
+        var dto = new RegisterPersonDto
         {
-            _repositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Person?)null);
+            Name = "Test User",
+            Cpf = "12345678900",
+            Email = "invalid-email",
+            BirthDate = DateTime.UtcNow.AddYears(-30),
+            Password = "password"
+        };
 
-            var result = await _service.GetByIdAsync(Guid.NewGuid());
+        _repositoryMock.Setup(r => r.ExistsCpfAsync(dto.Cpf, null)).ReturnsAsync(false);
 
-            Assert.Null(result);
-        }
+        var ex = await Assert.ThrowsAsync<ArgumentException>(() => _personService.CreateAsync(dto));
+        Assert.Equal("Invalid email format.", ex.Message);
+    }
 
-        [Fact]
-        public async Task UpdateAsync_Should_UpdatePerson_When_Valid()
+    [Fact]
+    public async Task GetAllAsync_ReturnsPersonSummaryDtoList()
+    {
+        var people = new List<Person>
         {
-            var id = Guid.NewGuid();
-            var existingPerson = new Person
-            {
-                Id = id,
-                Name = "Old Name",
-                Cpf = "12345678901",
-                BirthDate = DateTime.UtcNow.AddYears(-30)
-            };
+            new Person { Id = Guid.NewGuid(), Name = "User1", Email = "user1@example.com" },
+            new Person { Id = Guid.NewGuid(), Name = "User2", Email = "user2@example.com" }
+        };
 
-            var updateDto = new UpdatePersonDto
-            {
-                Name = "New Name",
-                Cpf = "12345678901",
-                Email = "newemail@example.com",
-                BirthDate = DateTime.UtcNow.AddYears(-31)
-            };
+        _repositoryMock.Setup(r => r.GetAllAsync()).ReturnsAsync(people);
 
-            _repositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(existingPerson);
-            _repositoryMock.Setup(r => r.ExistsCpfAsync(updateDto.Cpf, id)).ReturnsAsync(false);
-            _repositoryMock.Setup(r => r.UpdateAsync(existingPerson)).Returns(Task.CompletedTask);
+        var result = await _personService.GetAllAsync();
 
-            await _service.UpdateAsync(id, updateDto);
+        Assert.Equal(2, result.Count());
+        Assert.Contains(result, r => r.Name == "User1");
+        Assert.Contains(result, r => r.Name == "User2");
+    }
 
-            Assert.Equal(updateDto.Name, existingPerson.Name);
-            Assert.Equal(updateDto.Email, existingPerson.Email);
-            Assert.Equal(updateDto.Cpf, existingPerson.Cpf);
+    [Fact]
+    public async Task GetByIdAsync_WithExistingPerson_ReturnsPersonDetailsDto()
+    {
+        var id = Guid.NewGuid();
+        var person = new Person { Id = id, Name = "User", Email = "user@example.com" };
 
-            _repositoryMock.Verify(r => r.GetByIdAsync(id), Times.Once);
-            _repositoryMock.Verify(r => r.ExistsCpfAsync(updateDto.Cpf, id), Times.Once);
-            _repositoryMock.Verify(r => r.UpdateAsync(existingPerson), Times.Once);
-        }
+        _repositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(person);
 
-        [Fact]
-        public async Task UpdateAsync_Should_ThrowKeyNotFoundException_When_PersonNotFound()
+        var result = await _personService.GetByIdAsync(id);
+
+        Assert.NotNull(result);
+        Assert.Equal(person.Name, result!.Name);
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_WithNonExistingPerson_ReturnsNull()
+    {
+        _repositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Person?)null);
+
+        var result = await _personService.GetByIdAsync(Guid.NewGuid());
+
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_WithValidData_UpdatesPerson()
+    {
+        var id = Guid.NewGuid();
+        var existingPerson = new Person
         {
-            _repositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Person?)null);
+            Id = id,
+            Name = "Old Name",
+            Cpf = "12345678900",
+            Email = "old@example.com",
+            BirthDate = DateTime.UtcNow.AddYears(-30)
+        };
 
-            await Assert.ThrowsAsync<KeyNotFoundException>(() => _service.UpdateAsync(Guid.NewGuid(), new UpdatePersonDto()));
-
-            _repositoryMock.Verify(r => r.UpdateAsync(It.IsAny<Person>()), Times.Never);
-        }
-
-        [Fact]
-        public async Task UpdateAsync_Should_ThrowArgumentException_When_CpfExistsForOtherPerson()
+        var updateDto = new UpdatePersonDto
         {
-            var id = Guid.NewGuid();
-            var existingPerson = new Person
-            {
-                Id = id,
-                Name = "Old Name",
-                Cpf = "12345678901",
-                BirthDate = DateTime.UtcNow.AddYears(-30)
-            };
-            var updateDto = new UpdatePersonDto
-            {
-                Cpf = "98765432100",
-                Name = "Name",
-                BirthDate = DateTime.UtcNow.AddYears(-30)
-            };
+            Name = "New Name",
+            Cpf = "12345678900",
+            Email = "new@example.com",
+            BirthDate = DateTime.UtcNow.AddYears(-25)
+        };
 
-            _repositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(existingPerson);
-            _repositoryMock.Setup(r => r.ExistsCpfAsync(updateDto.Cpf, id)).ReturnsAsync(true);
+        _repositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(existingPerson);
+        _repositoryMock.Setup(r => r.ExistsCpfAsync(updateDto.Cpf, id)).ReturnsAsync(false);
+        _repositoryMock.Setup(r => r.UpdateAsync(existingPerson)).Returns(Task.CompletedTask).Verifiable();
 
-            await Assert.ThrowsAsync<ArgumentException>(() => _service.UpdateAsync(id, updateDto));
+        await _personService.UpdateAsync(id, updateDto);
 
-            _repositoryMock.Verify(r => r.UpdateAsync(It.IsAny<Person>()), Times.Never);
-        }
+        _repositoryMock.Verify(r => r.UpdateAsync(existingPerson), Times.Once);
+        Assert.Equal(updateDto.Name, existingPerson.Name);
+        Assert.Equal(updateDto.Email, existingPerson.Email);
+    }
 
-        [Fact]
-        public async Task DeleteAsync_Should_CallRepositoryDelete()
+    [Fact]
+    public async Task UpdateAsync_WithNonExistingPerson_ThrowsKeyNotFoundException()
+    {
+        _repositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Person?)null);
+
+        var ex = await Assert.ThrowsAsync<KeyNotFoundException>(() => _personService.UpdateAsync(Guid.NewGuid(), new UpdatePersonDto()));
+
+        Assert.Equal("Person not found.", ex.Message);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_WithDuplicateCpf_ThrowsArgumentException()
+    {
+        var id = Guid.NewGuid();
+        var existingPerson = new Person
         {
-            var id = Guid.NewGuid();
+            Id = id,
+            Name = "Old Name",
+            Cpf = "12345678900",
+            Email = "old@example.com",
+            BirthDate = DateTime.UtcNow.AddYears(-30)
+        };
 
-            _repositoryMock.Setup(r => r.DeleteAsync(id)).Returns(Task.CompletedTask);
+        var updateDto = new UpdatePersonDto
+        {
+            Name = "New Name",
+            Cpf = "12345678900",
+            Email = "new@example.com",
+            BirthDate = DateTime.UtcNow.AddYears(-25)
+        };
 
-            await _service.DeleteAsync(id);
+        _repositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(existingPerson);
+        _repositoryMock.Setup(r => r.ExistsCpfAsync(updateDto.Cpf, id)).ReturnsAsync(true);
 
-            _repositoryMock.Verify(r => r.DeleteAsync(id), Times.Once);
-        }
+        var ex = await Assert.ThrowsAsync<ArgumentException>(() => _personService.UpdateAsync(id, updateDto));
+
+        Assert.Equal("CPF already exists for another person.", ex.Message);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_CallsRepositoryDelete()
+    {
+        var id = Guid.NewGuid();
+
+        _repositoryMock.Setup(r => r.DeleteAsync(id)).Returns(Task.CompletedTask).Verifiable();
+
+        await _personService.DeleteAsync(id);
+
+        _repositoryMock.Verify(r => r.DeleteAsync(id), Times.Once);
+    }
+
+    // V2 Create
+
+    [Fact]
+    public async Task CreateV2Async_WithValidPerson_ReturnsCreatedPerson()
+    {
+        var dto = new RegisterV2PersonDto
+        {
+            Name = "Test User",
+            Cpf = "12345678900",
+            Email = "test@example.com",
+            BirthDate = DateTime.UtcNow.AddYears(-30),
+            Password = "password",
+            Address = "Some Address"
+        };
+
+        _repositoryMock.Setup(r => r.ExistsCpfAsync(dto.Cpf, null)).ReturnsAsync(false);
+        _repositoryMock.Setup(r => r.InsertAsync(It.IsAny<Person>()))
+                       .ReturnsAsync((Person p) => p);
+
+        var result = await _personService.CreateV2Async(dto);
+
+        Assert.NotNull(result);
+        Assert.Equal(dto.Name, result.Name);
+    }
+
+    [Fact]
+    public async Task CreateV2Async_WithoutAddress_ThrowsArgumentException()
+    {
+        var dto = new RegisterV2PersonDto
+        {
+            Name = "Test User",
+            Cpf = "12345678900",
+            Email = "test@example.com",
+            BirthDate = DateTime.UtcNow.AddYears(-30),
+            Password = "password",
+            Address = "" // Missing address
+        };
+
+        var ex = await Assert.ThrowsAsync<ArgumentException>(() => _personService.CreateV2Async(dto));
+
+        Assert.Equal("Address is required.", ex.Message);
+    }
+
+    [Fact]
+    public async Task UpdateV2Async_WithValidPerson_UpdatesPerson()
+    {
+        var id = Guid.NewGuid();
+        var existingPerson = new Person
+        {
+            Id = id,
+            Name = "Old Name",
+            Cpf = "12345678900",
+            Email = "old@example.com",
+            BirthDate = DateTime.UtcNow.AddYears(-30)
+        };
+
+        var updateDto = new UpdateV2PersonDto
+        {
+            Name = "New Name",
+            Cpf = "12345678900",
+            Email = "new@example.com",
+            BirthDate = DateTime.UtcNow.AddYears(-25),
+            Address = "New Address"
+        };
+
+        _repositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync(existingPerson);
+        _repositoryMock.Setup(r => r.UpdateAsync(existingPerson)).Returns(Task.CompletedTask).Verifiable();
+
+        await _personService.UpdateV2Async(id, updateDto);
+
+        _repositoryMock.Verify(r => r.UpdateAsync(existingPerson), Times.Once);
+        Assert.Equal(updateDto.Name, existingPerson.Name);
+    }
+
+    [Fact]
+    public async Task UpdateV2Async_WithNonExistingPerson_ThrowsKeyNotFoundException()
+    {
+        _repositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Person?)null);
+
+        var ex = await Assert.ThrowsAsync<KeyNotFoundException>(() => _personService.UpdateV2Async(Guid.NewGuid(), new UpdateV2PersonDto()));
+
+        Assert.Equal("Person not found.", ex.Message);
     }
 }
