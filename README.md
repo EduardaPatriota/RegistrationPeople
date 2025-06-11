@@ -1,4 +1,4 @@
-# Registration People
+# Registration of people
 
 > Sistema para cadastro de pessoas com autenticação e boas práticas em arquitetura de software, desenvolvido com ASP.NET Core 8 no backend e React no frontend.
 
