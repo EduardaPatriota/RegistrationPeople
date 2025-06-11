@@ -1,0 +1,357 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6042C811-9EF9-42D7-8355-AADAE0B253C9}|RegistrationPeople.Infrastructure\\RegistrationPeople.Infrastructure.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.infrastructure\\repositories\\personrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6042C811-9EF9-42D7-8355-AADAE0B253C9}|RegistrationPeople.Infrastructure\\RegistrationPeople.Infrastructure.csproj|solutionrelative:registrationpeople.infrastructure\\repositories\\personrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AF4A8B0-CED3-4C88-A28E-15229C62C98A}|RegistrationPeople.API\\RegistrationPeople.API.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.api\\controllers\\v2\\personcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AF4A8B0-CED3-4C88-A28E-15229C62C98A}|RegistrationPeople.API\\RegistrationPeople.API.csproj|solutionrelative:registrationpeople.api\\controllers\\v2\\personcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\factories\\personfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\factories\\personfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\services\\personservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\services\\personservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6042C811-9EF9-42D7-8355-AADAE0B253C9}|RegistrationPeople.Infrastructure\\RegistrationPeople.Infrastructure.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.infrastructure\\persistence\\configurations\\personconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6042C811-9EF9-42D7-8355-AADAE0B253C9}|RegistrationPeople.Infrastructure\\RegistrationPeople.Infrastructure.csproj|solutionrelative:registrationpeople.infrastructure\\persistence\\configurations\\personconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\interfaces\\ipersonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\interfaces\\ipersonservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\dtos\\persondetailsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\dtos\\persondetailsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\dtos\\personsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\dtos\\personsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\factories\\personv2factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\factories\\personv2factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\dtos\\v2\\updatev2persondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\dtos\\v2\\updatev2persondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\dtos\\updatepersondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\dtos\\updatepersondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\dtos\\registerpersondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\dtos\\registerpersondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\dtos\\v2\\registerv2persondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\dtos\\v2\\registerv2persondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AF4A8B0-CED3-4C88-A28E-15229C62C98A}|RegistrationPeople.API\\RegistrationPeople.API.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AF4A8B0-CED3-4C88-A28E-15229C62C98A}|RegistrationPeople.API\\RegistrationPeople.API.csproj|solutionrelative:registrationpeople.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AF4A8B0-CED3-4C88-A28E-15229C62C98A}|RegistrationPeople.API\\RegistrationPeople.API.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.api\\swagger\\swaggerdocumentation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AF4A8B0-CED3-4C88-A28E-15229C62C98A}|RegistrationPeople.API\\RegistrationPeople.API.csproj|solutionrelative:registrationpeople.api\\swagger\\swaggerdocumentation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AF4A8B0-CED3-4C88-A28E-15229C62C98A}|RegistrationPeople.API\\RegistrationPeople.API.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.api\\swagger\\configureswaggeroptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AF4A8B0-CED3-4C88-A28E-15229C62C98A}|RegistrationPeople.API\\RegistrationPeople.API.csproj|solutionrelative:registrationpeople.api\\swagger\\configureswaggeroptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E2AF4EF5-61F8-486A-852D-7CF1D369879E}|RegistrationPeople.Domain\\RegistrationPeople.Domain.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.domain\\entities\\person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E2AF4EF5-61F8-486A-852D-7CF1D369879E}|RegistrationPeople.Domain\\RegistrationPeople.Domain.csproj|solutionrelative:registrationpeople.domain\\entities\\person.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AF4A8B0-CED3-4C88-A28E-15229C62C98A}|RegistrationPeople.API\\RegistrationPeople.API.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.api\\controllers\\auth\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AF4A8B0-CED3-4C88-A28E-15229C62C98A}|RegistrationPeople.API\\RegistrationPeople.API.csproj|solutionrelative:registrationpeople.api\\controllers\\auth\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|c:\\users\\duda\\source\\registrationpeopleproject\\registrationpeopleapi\\registrationpeople.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D44617A-488F-4DB8-A32D-DE89BBAA60DB}|RegistrationPeople.Application\\RegistrationPeople.Application.csproj|solutionrelative:registrationpeople.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 12,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PersonSummaryDto.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\PersonSummaryDto.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\DTOs\\PersonSummaryDto.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\PersonSummaryDto.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\DTOs\\PersonSummaryDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T17:16:18.556Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PersonDetailsDto.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\PersonDetailsDto.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\DTOs\\PersonDetailsDto.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\PersonDetailsDto.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\DTOs\\PersonDetailsDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T17:16:15.58Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Interfaces\\IAuthService.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\Interfaces\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Interfaces\\IAuthService.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\Interfaces\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T17:07:16.642Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IPersonService.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Interfaces\\IPersonService.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\Interfaces\\IPersonService.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Interfaces\\IPersonService.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\Interfaces\\IPersonService.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAD4vxIAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T17:06:12.146Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PersonV2Factory.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Factories\\PersonV2Factory.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\Factories\\PersonV2Factory.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Factories\\PersonV2Factory.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\Factories\\PersonV2Factory.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAowDgAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T17:05:00.316Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "UpdatePersonDto.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\UpdatePersonDto.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\DTOs\\UpdatePersonDto.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\UpdatePersonDto.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\DTOs\\UpdatePersonDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T16:38:08.289Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UpdateV2PersonDto.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\V2\\UpdateV2PersonDto.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\DTOs\\V2\\UpdateV2PersonDto.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\V2\\UpdateV2PersonDto.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\DTOs\\V2\\UpdateV2PersonDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T16:31:38.67Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PersonController.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.API\\Controllers\\V2\\PersonController.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.API\\Controllers\\V2\\PersonController.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.API\\Controllers\\V2\\PersonController.cs",
+              "RelativeToolTip": "RegistrationPeople.API\\Controllers\\V2\\PersonController.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAowD0AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T15:50:52.481Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ConfigureSwaggerOptions.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.API\\Swagger\\ConfigureSwaggerOptions.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.API\\Swagger\\ConfigureSwaggerOptions.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.API\\Swagger\\ConfigureSwaggerOptions.cs",
+              "RelativeToolTip": "RegistrationPeople.API\\Swagger\\ConfigureSwaggerOptions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T15:08:01.44Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "SwaggerDocumentation.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.API\\Swagger\\SwaggerDocumentation.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.API\\Swagger\\SwaggerDocumentation.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.API\\Swagger\\SwaggerDocumentation.cs",
+              "RelativeToolTip": "RegistrationPeople.API\\Swagger\\SwaggerDocumentation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwCIAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T15:07:58.035Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.API\\Controllers\\Auth\\AuthController.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.API\\Controllers\\Auth\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.API\\Controllers\\Auth\\AuthController.cs",
+              "RelativeToolTip": "RegistrationPeople.API\\Controllers\\Auth\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T14:49:12.25Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PersonService.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Services\\PersonService.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\Services\\PersonService.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Services\\PersonService.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\Services\\PersonService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAADgvyQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T14:29:59.466Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PersonRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Infrastructure\\Repositories\\PersonRepository.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Infrastructure\\Repositories\\PersonRepository.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Infrastructure\\Repositories\\PersonRepository.cs",
+              "RelativeToolTip": "RegistrationPeople.Infrastructure\\Repositories\\PersonRepository.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwB8AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T14:18:44.742Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PersonFactory.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Factories\\PersonFactory.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\Factories\\PersonFactory.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Factories\\PersonFactory.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\Factories\\PersonFactory.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAowE0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T14:18:17.536Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\Services\\AuthService.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\Services\\AuthService.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAwwGEAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T14:17:31.537Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Person.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Domain\\Entities\\Person.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Domain\\Entities\\Person.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Domain\\Entities\\Person.cs",
+              "RelativeToolTip": "RegistrationPeople.Domain\\Entities\\Person.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T14:16:36.3Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LoginDto.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\LoginDto.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\DTOs\\LoginDto.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\LoginDto.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\DTOs\\LoginDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T14:16:29.319Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "RegisterV2PersonDto.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\V2\\RegisterV2PersonDto.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\DTOs\\V2\\RegisterV2PersonDto.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\V2\\RegisterV2PersonDto.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\DTOs\\V2\\RegisterV2PersonDto.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAowB0AAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T14:10:37.737Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "RegisterPersonDto.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\RegisterPersonDto.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Application\\DTOs\\RegisterPersonDto.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Application\\DTOs\\RegisterPersonDto.cs",
+              "RelativeToolTip": "RegistrationPeople.Application\\DTOs\\RegisterPersonDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBwAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T14:09:32.328Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.API\\Program.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.API\\Program.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.API\\Program.cs",
+              "RelativeToolTip": "RegistrationPeople.API\\Program.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAApwF0AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T14:06:51.881Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PersonConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Infrastructure\\Persistence\\Configurations\\PersonConfiguration.cs",
+              "RelativeDocumentMoniker": "RegistrationPeople.Infrastructure\\Persistence\\Configurations\\PersonConfiguration.cs",
+              "ToolTip": "C:\\Users\\Duda\\source\\RegistrationPeopleProject\\RegistrationPeopleApi\\RegistrationPeople.Infrastructure\\Persistence\\Configurations\\PersonConfiguration.cs",
+              "RelativeToolTip": "RegistrationPeople.Infrastructure\\Persistence\\Configurations\\PersonConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T13:21:11.907Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
