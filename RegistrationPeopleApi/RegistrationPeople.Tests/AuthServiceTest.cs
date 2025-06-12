@@ -21,7 +21,6 @@ public class AuthServiceTest
         _personRepositoryMock = new Mock<IPersonRepository>();
         _configurationMock = new Mock<IConfiguration>();
 
-        // Setup do IConfiguration para retornar valores do JWT
         _configurationMock.Setup(c => c["Jwt:Key"]).Returns("ThisIsASecretKeyForJwt1234");
         _configurationMock.Setup(c => c["Jwt:Issuer"]).Returns("TestIssuer");
         _configurationMock.Setup(c => c["Jwt:Audience"]).Returns("TestAudience");
@@ -152,7 +151,6 @@ public class AuthServiceTest
     [Fact]
     public void IsJwtExpired_WithExpiredToken_ReturnsTrue()
     {
-        // Criar token expirado manualmente para teste
         var token = CreateJwtToken(DateTime.UtcNow.AddMinutes(-10));
 
         var isExpired = AuthService.IsJwtExpired(token);
