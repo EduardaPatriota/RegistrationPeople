@@ -45,7 +45,7 @@ cd PeopleRegistration
 
 2. Navegue até a pasta da API:
 ```bash
-cd RegistrationPeopleProject/RegistrationPeopleApi
+cd RegistrationPeopleApi
 ```
 
 3. Restaure os pacotes e execute as migrações:
@@ -64,7 +64,7 @@ A API estará disponível em `https://localhost:7247`
 
 1. Navegue até a pasta do frontend:
 ```bash
-cd RegistrationPeopleProject/RegistrationPeopleApp
+cd RegistrationPeopleApp
 ```
 
 2. Instale as dependências:
@@ -74,6 +74,6 @@ npm install
 
 3. Execute o projeto:
 ```bash
-npm start
+npm run dev
 ```
-O frontend estará disponível em `http://localhost:8000`
+O frontend estará disponível em `http://localhost:8080`
