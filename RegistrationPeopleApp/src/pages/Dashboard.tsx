@@ -4,20 +4,14 @@ import Button from '@/components/Button';
 import PersonForm from '@/components/PersonForm';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { apiGet, apiPost, apiPut, apiDelete } from '../utils/api';
-
-interface Person {
-  id: string;
-  name: string;
-  email: string;
-  cpf: string;
-  gender: string;
-  birthDate: string;
-  birthplace: string;
-  nationality: string;
-  address: string;
-  password?: string;
-}
+import {
+  fetchPeople,
+  addPerson,
+  editPerson,
+  deletePerson,
+  fetchPersonById,
+  Person
+} from '@/services/PersonService';
 
 const Dashboard = () => {
   const [people, setPeople] = useState<Person[]>([]);
@@ -25,9 +19,9 @@ const Dashboard = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [search, setSearch] = useState('');
 
-  const fetchPeople = async () => {
+  const loadPeople = async () => {
     try {
-      const response = await apiGet('/v1/Person');
+      const response = await fetchPeople();
       setPeople(response.data);
     } catch (error) {
       console.error('Erro ao buscar pessoas:', error);
@@ -35,20 +29,12 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchPeople();
+    loadPeople();
   }, []);
 
-  function getPersonEndpoint(personData: { apiVersion?: string }, id?: string) {
-    const version = personData.apiVersion === 'v2' ? 'v2' : 'v1';
-    let endpoint = `/${version}/Person`;
-    if (id) endpoint += `/${id}`;
-    return endpoint;
-  }
-
-  const handleAddPerson = async (personData: Omit<Person, 'id'> & { apiVersion?: string }) => {
+  const handleAddPerson = async (personData: Omit<Person, 'id'>) => {
     try {
-      const { apiVersion, ...dataToSend } = personData;
-      const response = await apiPost(getPersonEndpoint(personData), dataToSend);
+      const response = await addPerson(personData);
       setPeople([...people, response.data]);
       setIsDialogOpen(false);
     } catch (error) {
@@ -56,27 +42,22 @@ const Dashboard = () => {
     }
   };
 
-  const handleEditPerson = async (personData: Omit<Person, 'id'> & { apiVersion?: string }) => {
-    if (editingPerson) {
-      try {
-        const { apiVersion, ...dataToSend } = personData;
-        const response = await apiPut(getPersonEndpoint(personData, editingPerson.id), dataToSend);
-
-          await fetchPeople();
-          setEditingPerson(null);
-          setIsDialogOpen(false);
-          console.warn('Nenhum dado retornado após a edição. Atualizando lista de pessoas.');
-        }
-       catch (error) {
-        console.error('Erro ao editar pessoa:', error);
-      }
+  const handleEditPerson = async (personData: Omit<Person, 'id'>) => {
+    if (!editingPerson) return;
+    try {
+      await editPerson(editingPerson.id, personData);
+      await loadPeople();
+      setEditingPerson(null);
+      setIsDialogOpen(false);
+    } catch (error) {
+      console.error('Erro ao editar pessoa:', error);
     }
   };
 
   const handleDeletePerson = async (id: string) => {
     try {
-      await apiDelete(`/v1/Person/${id}`);
-      await fetchPeople();
+      await deletePerson(id);
+      await loadPeople();
     } catch (error) {
       console.error('Erro ao deletar pessoa:', error);
     }
@@ -84,8 +65,7 @@ const Dashboard = () => {
 
   const openEditDialog = async (person: Person) => {
     try {
-      const response = await apiGet(`/v1/Person/${person.id}`);
-      console.log('Dados recebidos para edição:', response.data); 
+      const response = await fetchPersonById(person.id);
       setEditingPerson(response.data);
       setIsDialogOpen(true);
     } catch (error) {
@@ -102,12 +82,11 @@ const Dashboard = () => {
     window.location.href = '/';
   };
 
-  
   const filteredPeople = people.filter(person =>
-  (person.name?.toLowerCase() || '').includes(search.toLowerCase()) ||
-  (person.email?.toLowerCase() || '').includes(search.toLowerCase()) ||
-  (person.cpf || '').includes(search)
-);
+    (person.name?.toLowerCase() || '').includes(search.toLowerCase()) ||
+    (person.email?.toLowerCase() || '').includes(search.toLowerCase()) ||
+    (person.cpf || '').includes(search)
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6">

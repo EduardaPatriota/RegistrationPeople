@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { API_BASE_URL, apiPost, apiGet, getJtiFromToken } from '../utils/api'; 
+import { apiPost, apiGet, getJtiFromToken } from '../utils/api';
 
 interface User {
   id: string;
@@ -17,7 +17,7 @@ interface RegisterData {
   name: string;
   gender: string;
   email: string;
-  birthDate: string; 
+  birthDate: string;
   birthplace: string;
   nationality: string;
   cpf: string;
@@ -37,9 +37,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };
 
@@ -60,8 +58,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } else {
       setIsLoading(false);
     }
+    // eslint-disable-next-line
   }, []);
-  
 
   const fetchUserData = async (authToken: string) => {
     setIsLoading(true);
@@ -74,20 +72,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           id: userId,
           name: 'Administrador',
           email: 'admin@admin.com',
-          cpf: '',
-          gender: '',
-          birthDate: '',
-          birthplace: '',
-          nationality: '',
-          address: '',
         });
-        setIsLoading(false);
         return;
       }
 
       const response = await apiGet(`/v1/Person/${userId}`);
       setUser(response.data);
-      console.log('Dados do usuário:', response.data);
     } catch (error) {
       console.error('Erro ao buscar dados do usuário:', error);
       localStorage.removeItem('authToken');
@@ -98,21 +88,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-    const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
       const data = await apiPost('/auth/login', { email, password });
-      const authToken = data.data; 
+      const authToken = data.data;
       localStorage.setItem('authToken', authToken);
       setToken(authToken);
-      await fetchUserData(authToken); 
-    } catch (error) {
-      throw error;
+      await fetchUserData(authToken);
     } finally {
       setIsLoading(false);
     }
   };
-
 
   const register = async (userData: RegisterData) => {
     setIsLoading(true);
@@ -122,9 +109,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem('authToken', authToken);
       setToken(authToken);
       setUser(newUser);
-    } catch (error) {
-      console.error('Erro no cadastro:', error);
-      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -136,14 +120,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(null);
   };
 
-  const value = {
-    user,
-    token,
-    login,
-    register,
-    logout,
-    isLoading,
-  };
+  const value = { user, token, login, register, logout, isLoading };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
