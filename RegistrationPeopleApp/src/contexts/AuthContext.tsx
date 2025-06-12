@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { API_BASE_URL, apiPost, apiGet, getJtiFromToken } from '../utils/api'; // Importa utilitários
+import { API_BASE_URL, apiPost, apiGet, getJtiFromToken } from '../utils/api'; 
 
 interface User {
   id: string;
@@ -69,7 +69,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const userId = getJtiFromToken(authToken.replace('Bearer ', ''));
       if (!userId) throw new Error('ID do usuário não encontrado no token');
 
-      // Verifica se o ID do usuário é o do administrador
       if (userId === '00000000-0000-0000-0000-000000000000') {
         setUser({
           id: userId,

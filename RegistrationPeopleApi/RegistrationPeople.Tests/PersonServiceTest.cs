@@ -204,9 +204,7 @@ public class PersonServiceTests
 
         _repositoryMock.Verify(r => r.DeleteAsync(id), Times.Once);
     }
-
-    // V2 Create
-
+    
     [Fact]
     public async Task CreateV2Async_WithValidPerson_ReturnsCreatedPerson()
     {
@@ -240,7 +238,7 @@ public class PersonServiceTests
             Email = "test@example.com",
             BirthDate = DateTime.UtcNow.AddYears(-30),
             Password = "password",
-            Address = "" // Missing address
+            Address = ""
         };
 
         var ex = await Assert.ThrowsAsync<ArgumentException>(() => _personService.CreateV2Async(dto));

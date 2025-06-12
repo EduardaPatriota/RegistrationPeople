@@ -23,7 +23,6 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services
 builder.Services.AddControllers(); builder.Services.AddApiVersioning(options =>
 {
     options.ReportApiVersions = true;

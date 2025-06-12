@@ -1,5 +1,5 @@
 
-// Utilitário para fazer requisições autenticadas à API
+
 export const API_BASE_URL = 'https://localhost:7247/api'; 
 
 export const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
@@ -17,7 +17,6 @@ export const apiRequest = async (endpoint: string, options: RequestInit = {}) =>
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
     
-    // Se o token expirou, redirecionar para login
     if (response.status === 401) {
       localStorage.removeItem('authToken');
       window.location.href = '/';

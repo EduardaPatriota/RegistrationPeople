@@ -70,7 +70,6 @@ const PersonForm = ({ person, onSubmit, onCancel }: PersonFormProps) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Remove máscara do CPF
     const cleanCPF = formData.cpf.replace(/\D/g, '');
     const dataToSend = { ...formData, cpf: cleanCPF };
 

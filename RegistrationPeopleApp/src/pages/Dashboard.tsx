@@ -19,7 +19,6 @@ interface Person {
   password?: string;
 }
 
-// Dashboard.tsx
 const Dashboard = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [editingPerson, setEditingPerson] = useState<Person | null>(null);
@@ -63,8 +62,6 @@ const Dashboard = () => {
         const { apiVersion, ...dataToSend } = personData;
         const response = await apiPut(getPersonEndpoint(personData, editingPerson.id), dataToSend);
 
-        
-          // Aguarde o fetchPeople antes de fechar o modal
           await fetchPeople();
           setEditingPerson(null);
           setIsDialogOpen(false);
@@ -88,7 +85,7 @@ const Dashboard = () => {
   const openEditDialog = async (person: Person) => {
     try {
       const response = await apiGet(`/v1/Person/${person.id}`);
-      console.log('Dados recebidos para edição:', response.data); // <-- Adicione isso
+      console.log('Dados recebidos para edição:', response.data); 
       setEditingPerson(response.data);
       setIsDialogOpen(true);
     } catch (error) {
@@ -151,7 +148,6 @@ const Dashboard = () => {
             </Dialog>
           </div>
 
-          {/* Campo de busca */}
           <div className="mb-4 flex items-center gap-2">
             <Search className="w-4 h-4 text-gray-400" />
             <input

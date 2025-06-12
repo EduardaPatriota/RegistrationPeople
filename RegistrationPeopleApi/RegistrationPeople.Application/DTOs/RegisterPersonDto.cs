@@ -38,13 +38,11 @@ public class RegisterPersonDto : IValidatableObject
             yield return new ValidationResult("CPF inválido. Deve conter exatamente 11 números (sem pontos ou traços).", new[] { nameof(Cpf) });
         }
 
-        // Verifica se data de nascimento não é futura
         if (BirthDate > DateTime.Today)
         {
             yield return new ValidationResult("Data de nascimento não pode ser futura.", new[] { nameof(BirthDate) });
         }
 
-        // Validação de unicidade do CPF - precisa acessar serviço ou repositório
         var personRepository = validationContext.GetService(typeof(IPersonRepository)) as IPersonRepository;
         if (personRepository != null)
         {

@@ -32,7 +32,7 @@ public static class SwaggerDocumentation
             });
         });
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-        //services.ConfigureOptions<ConfigureSwaggerOptions>();
+      
         return services;
     }
 }
