@@ -76,4 +76,4 @@ npm install
 ```bash
 npm run dev
 ```
-O frontend estará disponível em `http://localhost:8000`
+O frontend estará disponível em `http://localhost:8080`
