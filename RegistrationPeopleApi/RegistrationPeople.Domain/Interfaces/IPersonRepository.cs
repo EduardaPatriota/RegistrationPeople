@@ -10,6 +10,7 @@ namespace RegistrationPeople.Domain.Interfaces
         Task UpdateAsync(Person person);
         Task DeleteAsync(Guid id);
         Task<bool> ExistsCpfAsync(string cpf, Guid? ignoreId = null);
+        Task<bool> ExistEmailAsync(string email, Guid? ignoredId = null);
         Task<Person?> GetByEmailAsync(string email);
     }
 }

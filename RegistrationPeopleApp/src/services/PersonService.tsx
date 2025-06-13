@@ -2,16 +2,16 @@
 import { apiGet, apiPost, apiPut, apiDelete } from '@/utils/api';
 
 export interface Person {
-  id: string;
-  name: string;
-  email: string;
-  cpf: string;
-  gender: string;
-  birthDate: string;
-  birthplace: string;
-  nationality: string;
-  address: string;
-  password?: string;
+  Id: string;
+  Name: string;
+  Email: string;
+  Cpf: string;
+  Gender: string;
+  BirthDate: string;
+  Birthplace: string;
+  Nationality: string;
+  Address: string;
+  Password?: string;
   apiVersion?: string;
 }
 

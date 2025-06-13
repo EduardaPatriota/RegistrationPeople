@@ -52,6 +52,12 @@ namespace RegistrationPeople.Infrastructure.Repositories
                 p.Cpf == cpf && (ignoreId == null || p.Id != ignoreId));
         }
 
+        public async Task<bool> ExistEmailAsync(string email, Guid? ignoredId = null)
+        {
+            return await _context.People.AnyAsync(p =>
+                p.Email == email && (ignoredId == null || p.Id != ignoredId));
+        }
+
         public async Task<Person?> GetByEmailAsync(string email)
         {
             return await _context.People.FirstOrDefaultAsync(p => p.Email == email);

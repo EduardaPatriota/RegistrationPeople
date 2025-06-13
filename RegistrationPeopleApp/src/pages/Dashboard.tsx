@@ -23,9 +23,11 @@ const Dashboard = () => {
   const loadPeople = async () => {
     try {
       const response = await fetchPeople();
-      setPeople(response.data);
+      
+      setPeople(response['Data']);
     } catch (error) {
       console.error('Erro ao buscar pessoas:', error);
+      throw error; 
     }
   };
 
@@ -36,17 +38,19 @@ const Dashboard = () => {
   const handleAddPerson = async (personData: Omit<Person, 'id'>) => {
     try {
       const response = await addPerson(personData);
+
       setPeople([...people, response.data]);
       setIsDialogOpen(false);
     } catch (error) {
-      console.error('Erro ao adicionar pessoa:', error);
+      throw error
+      
     }
   };
 
   const handleEditPerson = async (personData: Omit<Person, 'id'>) => {
     if (!editingPerson) return;
     try {
-      await editPerson(editingPerson.id, personData);
+      await editPerson(editingPerson.Id, personData);
       await loadPeople();
       setEditingPerson(null);
       setIsDialogOpen(false);
@@ -61,16 +65,18 @@ const Dashboard = () => {
       await loadPeople();
     } catch (error) {
       console.error('Erro ao deletar pessoa:', error);
+      throw error;
     }
   };
 
   const openEditDialog = async (person: Person) => {
     try {
-      const response = await fetchPersonById(person.id);
+      const response = await fetchPersonById(person.Id);
       setEditingPerson(response.data);
       setIsDialogOpen(true);
     } catch (error) {
       console.error('Erro ao buscar dados da pessoa para edição:', error);
+      throw error;
     }
   };
 
@@ -85,9 +91,9 @@ const Dashboard = () => {
   };
 
   const filteredPeople = Array.isArray(people) ? people.filter(person =>
-    (person.name?.toLowerCase() || '').includes(search.toLowerCase()) ||
-    (person.email?.toLowerCase() || '').includes(search.toLowerCase()) ||
-    (person.cpf || '').includes(search)
+    (person.Name?.toLowerCase() || '').includes(search.toLowerCase()) ||
+    (person.Email?.toLowerCase() || '').includes(search.toLowerCase()) ||
+    (person.Cpf || '').includes(search)
   ) : [];
 
   return (
@@ -153,19 +159,20 @@ const Dashboard = () => {
               </TableHeader>
               <TableBody>
                 {filteredPeople.map((person, idx) => (
-                  <TableRow key={person.id || person.email || idx}>
+                  
+                  <TableRow key={person.Id || person.Email || idx}>
                     <TableCell className="font-medium flex items-center gap-1">
-                      {person.name}
-                      {person.password && (
+                      {person.Name}
+                      {person.Password && (
                         <span title="Usuário com acesso">
                           <Lock className="w-4 h-4 text-gray-500 ml-1" aria-label="Usuário com acesso" />
                         </span>
                       )}
                     </TableCell>
-                    <TableCell>{person.email}</TableCell>
-                    <TableCell>{formatCPF(person.cpf)}</TableCell>
+                    <TableCell>{person.Email}</TableCell>
+                    <TableCell>{formatCPF(person.Cpf)}</TableCell>
                     <TableCell>
-                      {person.address ? person.address : '-'}
+                      {person.Address ? person.Address : '-'}
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex gap-2 justify-end">
@@ -179,7 +186,7 @@ const Dashboard = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => handleDeletePerson(person.id)}
+                          onClick={() => handleDeletePerson(person.Id)}
                           className="text-red-600 hover:text-red-700 hover:border-red-300"
                         >
                           <Trash2 className="w-4 h-4" />

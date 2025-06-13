@@ -28,6 +28,9 @@ namespace RegistrationPeople.Application.Services
             if (await _repository.ExistsCpfAsync(person.Cpf))
                 throw new ArgumentException("CPF already exists.");
 
+            if (await _repository.ExistEmailAsync(person.Email))
+                throw new ArgumentException("Email already exists");
+
             return await _repository.InsertAsync(person);
         }
 
@@ -58,6 +61,8 @@ namespace RegistrationPeople.Application.Services
 
             if (await _repository.ExistsCpfAsync(existing.Cpf, id))
                 throw new ArgumentException("CPF already exists for another person.");
+
+
 
             await _repository.UpdateAsync(existing);
         }
@@ -116,6 +121,9 @@ namespace RegistrationPeople.Application.Services
 
             if (await _repository.ExistsCpfAsync(person.Cpf))
                 throw new ArgumentException("CPF already exists.");
+
+            if(await _repository.ExistEmailAsync(person.Email)) 
+                throw new ArgumentException("Email already exists");
 
             return await _repository.InsertAsync(person);
         }

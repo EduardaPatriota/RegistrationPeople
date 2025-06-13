@@ -1,5 +1,5 @@
-//const API_BASE_URL = 'https://localhost:7247/api';
-const API_BASE_URL = "https://registrationpeopleapi-bsdfd3gygndzeaeq.brazilsouth-01.azurewebsites.net/api";
+const API_BASE_URL = 'https://localhost:7247/api';
+//const API_BASE_URL = "https://registrationpeopleapi-bsdfd3gygndzeaeq.brazilsouth-01.azurewebsites.net/api";
 
 type ApiMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
@@ -24,13 +24,29 @@ const handleResponse = async (response: Response) => {
   }
 
   if (response.status === 204) return null;
-  if (!response.ok) throw new Error(`Erro ${response.status}: ${response.statusText}`);
+
+  if (response.status === 400) {
+    const errorData = await response.json();
+    const error = new Error(errorData.title || errorData['Errors']);
+    (error as any).data = errorData; 
+    throw error;
+  }
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    const customError = new Error(errorData.title || 'Erro de requisição');
+    (customError as any).data = errorData;
+    
+    throw customError;
+  }
+  
 
   const contentType = response.headers.get('content-type');
   if (contentType?.includes('application/json')) {
     return response.json();
   }
-  return null;
+
+  return response.json();
 };
 
 export const apiRequest = async (
@@ -54,7 +70,6 @@ export const apiRequest = async (
     const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
     return await handleResponse(response);
   } catch (error) {
-    console.error('Erro na requisição:', error);
     throw error;
   }
 };

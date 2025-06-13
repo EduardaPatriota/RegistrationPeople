@@ -3,17 +3,18 @@ import { User, Mail, FileText, MapPin, Globe, Calendar, Home } from 'lucide-reac
 import { formatCPF } from '@/utils/formatters';
 import Input from './Input';
 import Button from './Button';
+import { toast } from '@/components/ui/use-toast';
 
 interface Person {
-  id?: string;
-  name: string;
-  gender: string;
-  email: string;
-  birthDate: string;
-  birthplace: string;
-  nationality: string;
-  cpf: string;
-  address?: string;
+  Id?: string;
+  Name: string;
+  Gender: string;
+  Email: string;
+  BirthDate: string;
+  Birthplace: string;
+  Nationality: string;
+  Cpf: string;
+  Address?: string;
 }
 
 interface PersonFormProps {
@@ -24,40 +25,41 @@ interface PersonFormProps {
 
 const PersonForm = ({ person, onSubmit, onCancel }: PersonFormProps) => {
   const [formData, setFormData] = useState<Omit<Person, 'id'>>({
-    name: '',
-    gender: '',
-    email: '',
-    birthDate: '',
-    birthplace: '',
-    nationality: '',
-    cpf: '',
-    address: '',
+    Name: '',
+    Gender: '',
+    Email: '',
+    BirthDate: '',
+    Birthplace: '',
+    Nationality: '',
+    Cpf: '',
+    Address: '',
+
   });
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (person) {  
       setFormData({
-        name: person.name || '',
-        gender: person.gender || '',
-        email: person.email || '',
-        birthDate: person.birthDate ? person.birthDate.slice(0, 10) : '',
-        birthplace: person.birthplace || '',
-        nationality: person.nationality || '',
-        cpf: person.cpf || '',
-        address: person.address || '',
+        Name: person.Name || '',
+        Gender: person.Gender || '',
+        Email: person.Email || '',
+        BirthDate: person.BirthDate ? person.BirthDate.slice(0, 10) : '',
+        Birthplace: person.Birthplace || '',
+        Nationality: person.Nationality || '',
+        Cpf: person.Cpf || '',
+        Address: person.Address || '',
       });
       
     } else {
       setFormData({
-        name: '',
-        gender: '',
-        email: '',
-        birthDate: '',
-        birthplace: '',
-        nationality: '',
-        cpf: '',
-        address: '',
+        Name: '',
+        Gender: '',
+        Email: '',
+        BirthDate: '',
+        Birthplace: '',
+        Nationality: '',
+        Cpf: '',
+        Address: '',
       });
     }
   }, [person]);
@@ -70,25 +72,53 @@ const PersonForm = ({ person, onSubmit, onCancel }: PersonFormProps) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const cleanCPF = formData.cpf.replace(/\D/g, '');
-    const dataToSend = { ...formData, cpf: cleanCPF };
+    try {
+      const cleanCPF = formData.Cpf.replace(/\D/g, '');
+      const dataToSend = { ...formData, Cpf: cleanCPF };
 
-    if (formData.address && formData.address.trim() !== '') {
-      await onSubmit({ ...dataToSend, apiVersion: 'v2' } as any);
-    } else {
-      await onSubmit(dataToSend);
+      if (formData.Address && formData.Address.trim() !== '') {
+        await onSubmit({ ...dataToSend, apiVersion: 'v2' } as any);
+      } else {
+        await onSubmit(dataToSend);
+      }
+
+
+    } catch (error: any) {
+      
+      const errors = error.data?.errors ?? error;
+     
+      if (errors) {
+        let messages = "";
+
+        if (errors instanceof Error) {
+          messages = errors.message;   
+        } else if (typeof errors === 'object' && errors !== null) {
+          messages = Object.values(errors).flat().join('\n');
+        } else {
+          messages = String(errors);
+        }
+
+        toast({
+          title: "Erro de validação",
+          description: messages,
+          variant: "destructive",
+        });
+      }
+      
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
+
+
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <Input
         type="text"
         placeholder="Nome completo"
-        value={formData.name}
-        onChange={e => handleChange('name', e.target.value)}
+        value={formData.Name}
+        onChange={e => handleChange('Name', e.target.value)}
         icon={<User className="w-5 h-5 text-gray-400" />}
         required
       />
@@ -97,8 +127,8 @@ const PersonForm = ({ person, onSubmit, onCancel }: PersonFormProps) => {
           <User className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
           <select
             id="gender"
-            value={formData.gender}
-            onChange={e => handleChange('gender', e.target.value)}
+            value={formData.Gender}
+            onChange={e => handleChange('Gender', e.target.value)}
             className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ease-in-out hover:border-gray-300 appearance-none"
             required
           >
@@ -113,48 +143,49 @@ const PersonForm = ({ person, onSubmit, onCancel }: PersonFormProps) => {
       <Input
         type="email"
         placeholder="Email"
-        value={formData.email}
-        onChange={e => handleChange('email', e.target.value)}
+        value={formData.Email}
+        onChange={e => handleChange('Email', e.target.value)}
         icon={<Mail className="w-5 h-5 text-gray-400" />}
         required
       />
       <Input
         type="date"
         placeholder="Data de nascimento"
-        value={formData.birthDate}
-        onChange={e => handleChange('birthDate', e.target.value)}
+        value={formData.BirthDate}
+        onChange={e => handleChange('BirthDate', e.target.value)}
         icon={<Calendar className="w-5 h-5 text-gray-400" />}
         required
       />
       <Input
         type="text"
         placeholder="Naturalidade"
-        value={formData.birthplace}
-        onChange={e => handleChange('birthplace', e.target.value)}
+        value={formData.Birthplace}
+        onChange={e => handleChange('Birthplace', e.target.value)}
         icon={<MapPin className="w-5 h-5 text-gray-400" />}
         required
       />
       <Input
         type="text"
         placeholder="Nacionalidade"
-        value={formData.nationality}
-        onChange={e => handleChange('nationality', e.target.value)}
+        value={formData.Nationality}
+        onChange={e => handleChange('Nationality', e.target.value)}
         icon={<Globe className="w-5 h-5 text-gray-400" />}
         required
       />
       <Input
         type="text"
         placeholder="CPF"
-        value={formData.cpf}
-        onChange={e => handleChange('cpf', formatCPF(e.target.value))}
+        value={formData.Cpf}
+        onChange={e => handleChange('Cpf', formatCPF(e.target.value))}
         icon={<FileText className="w-5 h-5 text-gray-400" />}
+        
         required
       />
       <Input
         type="text"
         placeholder="Endereço"
-        value={formData.address}
-        onChange={e => handleChange('address', e.target.value)}
+        value={formData.Address}
+        onChange={e => handleChange('Address', e.target.value)}
         icon={<Home className="w-5 h-5 text-gray-400" />}
       />
 
