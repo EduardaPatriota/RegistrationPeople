@@ -1,6 +1,5 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-name: Build and deploy ASP.Net Core app to Azure Web App - registrationpeopleapi
+# More GitHub Actions for Azure: https://github.com/Azure/actionsname: Build and deploy ASP.Net Core app to Azure Web App - registrationpeopleapi
 
 on:
   push:
@@ -15,23 +14,27 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up .NET Core
+      - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: '8.x'
 
-      - name: Build with dotnet
-        run: dotnet build RegistrationPeopleProject/RegistrationPeopleApi/RegistrationPeopleApi.csproj --configuration Release
+      - name: Restore dependencies
+        run: dotnet restore RegistrationPeopleProject/RegistrationPeopleApi/RegistrationPeople.API/RegistrationPeople.API.csproj
 
-      - name: dotnet publish
-        run: dotnet publish RegistrationPeopleProject/RegistrationPeopleApi/RegistrationPeopleApi.csproj -c Release -o published
+      - name: Build
+        run: dotnet build --configuration Release RegistrationPeopleProject/RegistrationPeopleApi/RegistrationPeople.API/RegistrationPeople.API.csproj
 
-      - name: Upload artifact for deployment job
+      - name: Publish
+        run: dotnet publish RegistrationPeopleProject/RegistrationPeopleApi/RegistrationPeople.API/RegistrationPeople.API.csproj -c Release -o published
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
+          name: registrationpeople-api
           path: published
 
   deploy:
@@ -45,11 +48,11 @@ jobs:
       contents: read
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
-      
+          name: registrationpeople-api
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
