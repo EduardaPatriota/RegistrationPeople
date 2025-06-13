@@ -2,26 +2,26 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { apiPost, apiGet, getJtiFromToken } from '../utils/api';
 
 interface User {
-  id: string;
-  name: string;
-  email: string;
-  cpf?: string;
-  gender?: string;
-  birthDate?: string;
-  birthplace?: string;
-  nationality?: string;
-  address?: string;
+  Id: string;
+  Name: string;
+  Email: string;
+  Cpf?: string;
+  Gender?: string;
+  BirthDate?: string;
+  Birthplace?: string;
+  Nationality?: string;
+  Address?: string;
 }
 
 interface RegisterData {
-  name: string;
-  gender: string;
-  email: string;
-  birthDate: string;
-  birthplace: string;
-  nationality: string;
-  cpf: string;
-  password: string;
+  Name: string;
+  Gender: string;
+  Email: string;
+  BirthDate: string;
+  Birthplace: string;
+  Nationality: string;
+  Cpf: string;
+  Password: string;
 }
 
 interface AuthContextType {
@@ -66,19 +66,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const userId = getJtiFromToken(authToken.replace('Bearer ', ''));
       if (!userId) throw new Error('ID do usuário não encontrado no token');
-
+      console.log('ID do usuário obtido do token:', userId);
       if (userId === '00000000-0000-0000-0000-000000000000') {
         setUser({
-          id: userId,
-          name: 'Administrador',
-          email: 'admin@admin.com',
+          Id: userId,
+          Name: 'Administrador',
+          Email: 'admin@admin.com',
         });
         return;
       }
 
       const response = await apiGet(`/v1/Person/${userId}`);
-      console.log('Dados do usuário recebidos:', response.data);
-      setUser(response.data);
+      console.log('Dados do usuário recebidos:', response['Data']);
+      setUser(response['Data']);
     } catch (error) {
       console.error('Erro ao buscar dados do usuário:', error);
       localStorage.removeItem('authToken');
