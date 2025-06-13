@@ -1,5 +1,5 @@
-const API_BASE_URL = 'https://localhost:7247/api';
-//const API_BASE_URL = "https://registrationpeopleapi-bsdfd3gygndzeaeq.brazilsouth-01.azurewebsites.net/api";
+//const API_BASE_URL = 'https://localhost:7247/api';
+const API_BASE_URL = "https://registrationpeopleapi-bsdfd3gygndzeaeq.brazilsouth-01.azurewebsites.net/api";
 
 type ApiMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
