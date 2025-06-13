@@ -66,7 +66,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const userId = getJtiFromToken(authToken.replace('Bearer ', ''));
       if (!userId) throw new Error('ID do usuário não encontrado no token');
-      console.log('ID do usuário obtido do token:', userId);
       if (userId === '00000000-0000-0000-0000-000000000000') {
         setUser({
           Id: userId,
@@ -77,7 +76,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
 
       const response = await apiGet(`/v1/Person/${userId}`);
-      console.log('Dados do usuário recebidos:', response['Data']);
       setUser(response['Data']);
     } catch (error) {
       console.error('Erro ao buscar dados do usuário:', error);

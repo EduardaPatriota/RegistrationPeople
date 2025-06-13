@@ -25,7 +25,7 @@ const LoginForm = () => {
         title: "Login realizado com sucesso!",
         description: "Bem-vindo de volta!",
       });
-       console.log('Navegando para dashboard');
+      
       navigate('/dashboard');
     } catch (error) {
       console.error('Erro no login:', error);
