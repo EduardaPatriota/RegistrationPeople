@@ -77,6 +77,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
 
       const response = await apiGet(`/v1/Person/${userId}`);
+      console.log('Dados do usuário recebidos:', response.data);
       setUser(response.data);
     } catch (error) {
       console.error('Erro ao buscar dados do usuário:', error);
@@ -92,7 +93,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoading(true);
     try {
       const data = await apiPost('/auth/login', { email, password });
-      const authToken = data.token;
+      const authToken = data['Token'];
+      console.log('Token recebido:', authToken);
+      
       localStorage.setItem('authToken', authToken);
       setToken(authToken);
       await fetchUserData(authToken);

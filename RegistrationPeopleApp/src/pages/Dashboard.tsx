@@ -84,11 +84,11 @@ const Dashboard = () => {
     window.location.href = '/';
   };
 
-  const filteredPeople = people.filter(person =>
+  const filteredPeople = Array.isArray(people) ? people.filter(person =>
     (person.name?.toLowerCase() || '').includes(search.toLowerCase()) ||
     (person.email?.toLowerCase() || '').includes(search.toLowerCase()) ||
     (person.cpf || '').includes(search)
-  );
+  ) : [];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6">
