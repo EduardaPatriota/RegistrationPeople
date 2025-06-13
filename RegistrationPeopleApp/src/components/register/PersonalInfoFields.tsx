@@ -46,6 +46,7 @@ const PersonalInfoFields: React.FC<PersonalInfoFieldsProps> = ({ formData, onInp
             <option value="masculino">Masculino</option>
             <option value="feminino">Feminino</option>
             <option value="outro">Outro</option>
+            <option value="doNotSpecify">Prefiro não informar</option>
           </select>
         </div>
       </div>

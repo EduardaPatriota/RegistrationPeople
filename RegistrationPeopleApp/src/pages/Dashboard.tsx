@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2, LogOut, Lock, Search } from 'lucide-react';
 import Button from '@/components/Button';
 import PersonForm from '@/components/PersonForm';
+import { formatCPF } from '@/utils/formatters';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import {
@@ -161,7 +162,7 @@ const Dashboard = () => {
                       )}
                     </TableCell>
                     <TableCell>{person.email}</TableCell>
-                    <TableCell>{person.cpf}</TableCell>
+                    <TableCell>{formatCPF(person.cpf)}</TableCell>
                     <TableCell>
                       {person.address ? person.address : '-'}
                     </TableCell>

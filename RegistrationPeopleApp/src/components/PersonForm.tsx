@@ -92,14 +92,24 @@ const PersonForm = ({ person, onSubmit, onCancel }: PersonFormProps) => {
         icon={<User className="w-5 h-5 text-gray-400" />}
         required
       />
-      <Input
-        type="text"
-        placeholder="Gênero"
-        value={formData.gender}
-        onChange={e => handleChange('gender', e.target.value)}
-        icon={<User className="w-5 h-5 text-gray-400" />}
-        required
-      />
+      <div>
+        <div className="relative">
+          <User className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+          <select
+            id="gender"
+            value={formData.gender}
+            onChange={e => handleChange('gender', e.target.value)}
+            className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ease-in-out hover:border-gray-300 appearance-none"
+            required
+          >
+            {!person && <option value="">Selecione o gênero</option>}
+            <option value="masculino">Masculino</option>
+            <option value="feminino">Feminino</option>
+            <option value="outro">Outro</option>
+            <option value="doNotSpecify">Prefiro não informar</option>
+          </select>
+        </div>
+      </div>
       <Input
         type="email"
         placeholder="Email"
