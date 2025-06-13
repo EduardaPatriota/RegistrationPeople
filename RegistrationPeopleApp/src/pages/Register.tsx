@@ -111,14 +111,14 @@ const Register = () => {
 
     try {
       await register({
-        name: formData.nome,
-        email: formData.email,
-        password: formData.senha,
-        birthDate: formData.dataNascimento,
-        gender: formData.sexo,
-        birthplace: formData.naturalidade,
-        nationality: formData.nacionalidade,
-        cpf: formData.cpf.replace(/\D/g, ''),
+        Name: formData.nome,
+        Email: formData.email,
+        Password: formData.senha,
+        BirthDate: formData.dataNascimento,
+        Gender: formData.sexo,
+        Birthplace: formData.naturalidade,
+        Nationality: formData.nacionalidade,
+        Cpf: formData.cpf.replace(/\D/g, ''),
       });
 
       toast({

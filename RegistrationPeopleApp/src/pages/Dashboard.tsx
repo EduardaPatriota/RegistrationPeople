@@ -23,8 +23,9 @@ const Dashboard = () => {
   const loadPeople = async () => {
     try {
       const response = await fetchPeople();
-      
+        
       setPeople(response['Data']);
+      
     } catch (error) {
       console.error('Erro ao buscar pessoas:', error);
       throw error; 
@@ -38,8 +39,7 @@ const Dashboard = () => {
   const handleAddPerson = async (personData: Omit<Person, 'id'>) => {
     try {
       const response = await addPerson(personData);
-
-      setPeople([...people, response.data]);
+      setPeople([...people, response['Data']]);
       setIsDialogOpen(false);
     } catch (error) {
       throw error
@@ -72,7 +72,7 @@ const Dashboard = () => {
   const openEditDialog = async (person: Person) => {
     try {
       const response = await fetchPersonById(person.Id);
-      setEditingPerson(response.data);
+      setEditingPerson(response['Data']);
       setIsDialogOpen(true);
     } catch (error) {
       console.error('Erro ao buscar dados da pessoa para edição:', error);
