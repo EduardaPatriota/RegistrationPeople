@@ -1,5 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actionsname: Build and deploy ASP.Net Core app to Azure Web App - registrationpeopleapi
+name: Build and deploy ASP.Net Core app to Azure Web App - registrationpeopleapi
 
 on:
   push:
@@ -14,27 +13,27 @@ jobs:
       contents: read
 
     steps:
-      - name: Checkout code
+      - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Set up .NET
+      - name: Configurar .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
 
-      - name: Restore dependencies
-        run: dotnet restore RegistrationPeopleProject/RegistrationPeopleApi/RegistrationPeople.API/RegistrationPeople.API.csproj
+      - name: Restaurar pacotes
+        run: dotnet restore RegistrationPeopleApi/RegistrationPeople.API/RegistrationPeople.API.csproj
 
       - name: Build
-        run: dotnet build --configuration Release RegistrationPeopleProject/RegistrationPeopleApi/RegistrationPeople.API/RegistrationPeople.API.csproj
+        run: dotnet build RegistrationPeopleApi/RegistrationPeople.API/RegistrationPeople.API.csproj --configuration Release --no-restore
 
-      - name: Publish
-        run: dotnet publish RegistrationPeopleProject/RegistrationPeopleApi/RegistrationPeople.API/RegistrationPeople.API.csproj -c Release -o published
+      - name: Publicar
+        run: dotnet publish RegistrationPeopleApi/RegistrationPeople.API/RegistrationPeople.API.csproj -c Release -o published --no-build
 
-      - name: Upload artifact
+      - name: Upload do artefato
         uses: actions/upload-artifact@v4
         with:
-          name: registrationpeople-api
+          name: dotnet-app
           path: published
 
   deploy:
@@ -48,19 +47,19 @@ jobs:
       contents: read
 
     steps:
-      - name: Download artifact
+      - name: Download do artefato
         uses: actions/download-artifact@v4
         with:
-          name: registrationpeople-api
+          name: dotnet-app
 
-      - name: Login to Azure
+      - name: Login no Azure
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4D623389CB2E44A3863BAC7CC28550B7 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BCF524ADA1B64EFF9B104B67B2ECAA2C }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5A6CEEBBD08C4030BC01D5DBA823F16F }}
 
-      - name: Deploy to Azure Web App
+      - name: Deploy no Azure App Service
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
