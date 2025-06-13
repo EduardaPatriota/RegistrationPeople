@@ -23,7 +23,16 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers(); builder.Services.AddApiVersioning(options =>
+builder.Services.AddControllers(options =>
+{
+    options.ReturnHttpNotAcceptable = true;
+})
+.AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+});
+
+builder.Services.AddApiVersioning(options =>
 {
     options.ReportApiVersions = true;
     options.AssumeDefaultVersionWhenUnspecified = true;

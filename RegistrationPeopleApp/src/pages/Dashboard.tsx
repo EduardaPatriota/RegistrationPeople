@@ -78,8 +78,9 @@ const Dashboard = () => {
     setEditingPerson(null);
     setIsDialogOpen(true);
   };
-
+  
   const handleLogout = () => {
+    localStorage.removeItem('authToken');
     window.location.href = '/';
   };
 

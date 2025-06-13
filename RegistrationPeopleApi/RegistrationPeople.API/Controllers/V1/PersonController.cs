@@ -23,17 +23,19 @@ namespace RegistrationPeople.API.Controllers.V1
 
         
         [HttpGet]
+        [Produces("application/json")]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<PersonSummaryDto>>), 200)]
         [ProducesResponseType(401)]
         public async Task<IActionResult> GetAll()
         {
             var people = await _personService.GetAllAsync();
             var response = ApiResponse<IEnumerable<PersonSummaryDto>>.Ok(people);
-            return StatusCode((int)response.StatusCode, response);
+            return StatusCode((int)HttpStatusCode.OK, response);
         }
 
 
         [HttpGet("{id}")]
+        [Produces("application/json")]
         [ProducesResponseType(typeof(ApiResponse<PersonDetailsDto>), 200)]
         [ProducesResponseType(typeof(ApiResponse<string>), 404)] 
         [ProducesResponseType(401)]
@@ -43,45 +45,47 @@ namespace RegistrationPeople.API.Controllers.V1
 
             if (person == null)
                 return StatusCode((int)HttpStatusCode.NotFound,
-                    ApiResponse<string>.Fail("Pessoa não encontrada", HttpStatusCode.NotFound));
+                    ApiResponse<string>.Fail("Pessoa não encontrada"));
 
             var response = ApiResponse<PersonDetailsDto>.Ok(person);
-            return StatusCode((int)response.StatusCode, response);
+            return StatusCode((int)HttpStatusCode.OK, response);
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(ApiResponse<Person>), 201)]
-        [ProducesResponseType(typeof(ApiResponse<IEnumerable<string>>), 400)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ApiResponse<Person>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<string>>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(401)]
-        [ProducesResponseType(500)]
         public async Task<IActionResult> Create([FromBody] RegisterPersonDto personDto)
         {
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<IEnumerable<string>>.Fail(errors, HttpStatusCode.BadRequest));
+                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<IEnumerable<string>>.Fail(errors));
             }
 
             try
             {
                 var created = await _personService.CreateAsync(personDto);
-                var response = ApiResponse<Person>.Ok(created, HttpStatusCode.Created);
+                var response = ApiResponse<Person>.Ok(created);
                 return CreatedAtAction(nameof(GetById), new { id = created.Id }, response);
             }
             catch (ArgumentException ex)
             {
-                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<Person>.Fail(ex.Message, HttpStatusCode.BadRequest));
+                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<Person>.Fail(ex.Message));
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, ApiResponse<Person>.Fail("Erro interno: " + ex.Message, HttpStatusCode.InternalServerError));
+                return StatusCode((int)HttpStatusCode.InternalServerError, ApiResponse<Person>.Fail("Erro interno: " + ex.Message));
             }
         }
 
 
         [HttpPut("{id}")]
-        [ProducesResponseType(typeof(ApiResponse<string>), 200)] 
-        [ProducesResponseType(typeof(ApiResponse<IEnumerable<string>>), 400)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ApiResponse<string>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<string>>), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ApiResponse<string>), 404)]
         [ProducesResponseType(401)]
         [ProducesResponseType(500)]
@@ -95,7 +99,7 @@ namespace RegistrationPeople.API.Controllers.V1
                     .ToList();
 
                 return StatusCode((int)HttpStatusCode.BadRequest,
-                    ApiResponse<IEnumerable<string>>.Fail(errors, HttpStatusCode.BadRequest));
+                    ApiResponse<IEnumerable<string>>.Fail(errors));
             }
 
             try
@@ -106,22 +110,23 @@ namespace RegistrationPeople.API.Controllers.V1
             catch (KeyNotFoundException)
             {
                 return StatusCode((int)HttpStatusCode.NotFound,
-                    ApiResponse<string>.Fail("Pessoa não encontrada", HttpStatusCode.NotFound));
+                    ApiResponse<string>.Fail("Pessoa não encontrada"));
             }
             catch (ArgumentException ex)
             {
                 return StatusCode((int)HttpStatusCode.BadRequest,
-                    ApiResponse<string>.Fail(ex.Message, HttpStatusCode.BadRequest));
+                    ApiResponse<string>.Fail(ex.Message));
             }
             catch (Exception ex)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError,
-                    ApiResponse<string>.Fail("Erro interno: " + ex.Message, HttpStatusCode.InternalServerError));
+                    ApiResponse<string>.Fail("Erro interno: " + ex.Message));
             }
         }
 
 
         [HttpDelete("{id}")]
+        [Produces("application/json")]
         [ProducesResponseType(typeof(ApiResponse<string>), 200)]
         [ProducesResponseType(typeof(ApiResponse<string>), 404)]
         [ProducesResponseType(401)]
@@ -135,11 +140,11 @@ namespace RegistrationPeople.API.Controllers.V1
             }
             catch (KeyNotFoundException)
             {
-                return StatusCode((int)HttpStatusCode.NotFound, ApiResponse<string>.Fail("Pessoa não encontrada", HttpStatusCode.NotFound));
+                return StatusCode((int)HttpStatusCode.NotFound, ApiResponse<string>.Fail("Pessoa não encontrada"));
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, ApiResponse<string>.Fail("Erro interno: " + ex.Message, HttpStatusCode.InternalServerError));
+                return StatusCode((int)HttpStatusCode.InternalServerError, ApiResponse<string>.Fail("Erro interno: " + ex.Message));
             }
         }
     }

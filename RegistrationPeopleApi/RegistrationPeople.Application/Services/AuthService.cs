@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using RegistrationPeople.Application.DTOs;
 using RegistrationPeople.Application.Factories;
 using RegistrationPeople.Application.Interfaces;
+using RegistrationPeople.Application.Responses;
 using RegistrationPeople.Domain.Entities;
 using RegistrationPeople.Domain.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,21 +25,25 @@ namespace RegistrationPeople.Application.Services
             _config = config;
         }
 
-        public async Task<string?> LoginAsync(LoginDto loginDto)
+        public async Task<LoginResponse> LoginAsync(LoginDto loginDto)
         {
-            
+            // Usuário Admin fixo
             if (loginDto.Email == "admin@admin.com" && loginDto.Password == "admin")
             {
                 var token = GenerateToken(Guid.Empty, "Admin");
-                return token;
+                return LoginResponse.Ok(token);
             }
-           
+
             var person = await _personRepository.GetByEmailAsync(loginDto.Email);
-            if (person == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, person.PasswordHash))
-                return null;
+            if (person == null)
+                return LoginResponse.Fail("Usuário não encontrado");
+
+            var isPasswordValid = BCrypt.Net.BCrypt.Verify(loginDto.Password, person.PasswordHash);
+            if (!isPasswordValid)
+                return LoginResponse.Fail("Senha incorreta");
 
             var jwt = GenerateToken(person.Id, person.Name);
-            return jwt;
+            return LoginResponse.Ok(jwt);
         }
 
         public async Task<IdentityResult> RegisterAsync(RegisterPersonDto registerDto)

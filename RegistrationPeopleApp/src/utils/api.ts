@@ -15,9 +15,14 @@ const getAuthHeaders = () => {
 const handleResponse = async (response: Response) => {
   if (response.status === 401) {
     localStorage.removeItem('authToken');
+    alert('Sua sessão expirou. Faça login novamente.');
     window.location.href = '/';
     return;
   }
+  if (response.status === 404) {
+    throw new Error('Recurso não encontrado.');
+  }
+
   if (response.status === 204) return null;
   if (!response.ok) throw new Error(`Erro ${response.status}: ${response.statusText}`);
 

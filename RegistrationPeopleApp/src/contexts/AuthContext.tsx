@@ -58,7 +58,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     } else {
       setIsLoading(false);
     }
-    // eslint-disable-next-line
+  
   }, []);
 
   const fetchUserData = async (authToken: string) => {
@@ -92,11 +92,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoading(true);
     try {
       const data = await apiPost('/auth/login', { email, password });
-      const authToken = data.data;
+      const authToken = data.token;
       localStorage.setItem('authToken', authToken);
       setToken(authToken);
       await fetchUserData(authToken);
+    } catch (error) {
+      console.error('Erro ao buscar dados do usuário:', error);
+      throw error;
     } finally {
+      
       setIsLoading(false);
     }
   };

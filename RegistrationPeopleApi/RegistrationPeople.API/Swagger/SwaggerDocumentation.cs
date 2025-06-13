@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using PeopleRegistration.API.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
-
 
 public static class SwaggerDocumentation
 {
@@ -19,6 +19,7 @@ public static class SwaggerDocumentation
                 Type = SecuritySchemeType.ApiKey,
                 Scheme = "Bearer"
             });
+
             c.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 [new OpenApiSecurityScheme
@@ -30,9 +31,13 @@ public static class SwaggerDocumentation
                     }
                 }] = Array.Empty<string>()
             });
+
+
+            c.OperationFilter<ApiResponseSchemaFilter>();
         });
+
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-      
+
         return services;
     }
 }

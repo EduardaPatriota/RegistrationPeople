@@ -44,9 +44,12 @@ public class AuthServiceTests
         };
 
         var result = await _authService.LoginAsync(dto);
-
+        if (result == null)
+        {
+            Assert.Fail("Login failed, expected a valid token.");
+        }
         Assert.NotNull(result);
-        Assert.False(AuthService.IsJwtExpired(result));
+        Assert.False(AuthService.IsJwtExpired(result.Token));
     }
 
     [Fact]
@@ -113,9 +116,11 @@ public class AuthServiceTests
         };
 
         var result = await _authService.LoginAsync(dto);
-
+        if (result == null){
+            Assert.Fail("Login failed, expected a valid token.");
+        }
         Assert.NotNull(result);
-        Assert.False(AuthService.IsJwtExpired(result));
+        Assert.False(AuthService.IsJwtExpired(result.Token));
     }
 
     [Fact]

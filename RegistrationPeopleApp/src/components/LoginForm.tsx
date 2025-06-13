@@ -28,6 +28,7 @@ const LoginForm = () => {
        console.log('Navegando para dashboard');
       navigate('/dashboard');
     } catch (error) {
+      console.error('Erro no login:', error);
       toast({
         title: "Erro no login",
         description: error instanceof Error ? error.message : "Email ou senha incorretos",

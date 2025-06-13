@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RegistrationPeople.Application.DTOs;
 using RegistrationPeople.Application.Interfaces;
@@ -18,21 +19,22 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [Produces("application/json")]
     [ProducesResponseType(typeof(ApiResponse<string>), (int)HttpStatusCode.OK)]
-    [ProducesResponseType(typeof(ApiResponse<string>), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(ApiResponse<string>), (int)HttpStatusCode.NotFound)]
     public async Task<IActionResult> Login([FromBody] LoginDto model)
     {
-        var token = await _authService.LoginAsync(model);
+        var result = await _authService.LoginAsync(model);
 
-        if (string.IsNullOrWhiteSpace(token))
-        {
-            return Unauthorized(ApiResponse<string>.Fail("Credenciais inválidas", HttpStatusCode.Unauthorized));
-        }
+        if (!result.Success)
+            return NotFound(ApiResponse<string>.Fail(result.Error ?? "Credenciais inválidas"));
 
-        return Ok(ApiResponse<string>.Ok(token));
+        return Ok(LoginResponse.Ok(result.Token!));
     }
 
+
     [HttpPost("register")]
+    [Produces("application/json")]
     [ProducesResponseType(typeof(ApiResponse<string>), (int)HttpStatusCode.OK)]
     [ProducesResponseType(typeof(ApiResponse<List<string>>), (int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> Register([FromBody] RegisterPersonDto model)
@@ -42,7 +44,7 @@ public class AuthController : ControllerBase
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(e => e.Description).ToList();
-            return BadRequest(ApiResponse<List<string>>.Fail(errors, HttpStatusCode.BadRequest));
+            return BadRequest(ApiResponse<List<string>>.Fail(errors));
         }
 
         return Ok(ApiResponse<string>.Ok("Usuário registrado com sucesso"));
