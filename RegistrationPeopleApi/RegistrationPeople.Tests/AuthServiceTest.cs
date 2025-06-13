@@ -66,7 +66,7 @@ public class AuthServiceTests
 
         var result = await _authService.LoginAsync(dto);
 
-        Assert.Null(result);
+        Assert.Null(result.Token);
     }
 
     [Fact]
@@ -91,7 +91,7 @@ public class AuthServiceTests
 
         var result = await _authService.LoginAsync(dto);
 
-        Assert.Null(result);
+        Assert.Null(result.Token);
     }
 
     [Fact]
