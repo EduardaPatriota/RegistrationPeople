@@ -93,7 +93,7 @@ namespace RegistrationPeople.Application.Services
             var handler = new JwtSecurityTokenHandler();
             var jwtToken = handler.ReadJwtToken(token);
 
-            var expClaim = jwtToken.Payload.Exp;
+            var expClaim = jwtToken.Payload.Expiration;
             if (expClaim == null)
                 return true; 
 

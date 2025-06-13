@@ -31,6 +31,7 @@ builder.Services.AddControllers(); builder.Services.AddApiVersioning(options =>
     options.ApiVersionReader = new UrlSegmentApiVersionReader(); 
 });
 
+
 builder.Services.AddVersionedApiExplorer(options =>
 {
     options.GroupNameFormat = "'v'VVV"; 
@@ -86,6 +87,12 @@ builder.Logging.AddConsole();
 var app = builder.Build();
 
 app.UseSwagger();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 app.UseSwaggerUI(c =>

@@ -13,7 +13,7 @@ public class RegisterPersonDto : IValidatableObject
     public string? Gender { get; set; }
 
     [EmailAddress(ErrorMessage = "E-mail inválido.")]
-    public string? Email { get; set; }
+    public required string Email { get; set; }
 
     [Required(ErrorMessage = "Data de nascimento é obrigatória.")]
     [DataType(DataType.Date, ErrorMessage = "Data de nascimento inválida.")]
