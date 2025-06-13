@@ -62,7 +62,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowLocalhost",
         policy =>
         {
-            policy.WithOrigins("http://localhost:8080")
+            policy.WithOrigins("http://localhost:8080", "https://registration-people-app.vercel.app")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
