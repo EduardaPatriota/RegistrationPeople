@@ -18,6 +18,8 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [ProducesResponseType(typeof(ApiResponse<string>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ApiResponse<string>), (int)HttpStatusCode.Unauthorized)]
     public async Task<IActionResult> Login([FromBody] LoginDto model)
     {
         var token = await _authService.LoginAsync(model);
@@ -31,6 +33,8 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
+    [ProducesResponseType(typeof(ApiResponse<string>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ApiResponse<List<string>>), (int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> Register([FromBody] RegisterPersonDto model)
     {
         var result = await _authService.RegisterAsync(model);
@@ -38,7 +42,7 @@ public class AuthController : ControllerBase
         if (!result.Succeeded)
         {
             var errors = result.Errors.Select(e => e.Description).ToList();
-            return BadRequest(ApiResponse<List<string>>.Fails(errors, HttpStatusCode.BadRequest));
+            return BadRequest(ApiResponse<List<string>>.Fail(errors, HttpStatusCode.BadRequest));
         }
 
         return Ok(ApiResponse<string>.Ok("Usuário registrado com sucesso"));

@@ -21,7 +21,10 @@ namespace RegistrationPeople.API.Controllers.V1
             _personService = personService;
         }
 
+        
         [HttpGet]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<PersonSummaryDto>>), 200)]
+        [ProducesResponseType(401)]
         public async Task<IActionResult> GetAll()
         {
             var people = await _personService.GetAllAsync();
@@ -29,24 +32,34 @@ namespace RegistrationPeople.API.Controllers.V1
             return StatusCode((int)response.StatusCode, response);
         }
 
+
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<PersonDetailsDto>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<string>), 404)] 
+        [ProducesResponseType(401)]
         public async Task<IActionResult> GetById(Guid id)
         {
             var person = await _personService.GetByIdAsync(id);
+
             if (person == null)
-                return StatusCode((int)HttpStatusCode.NotFound, ApiResponse<Person>.Fail("Pessoa não encontrada", HttpStatusCode.NotFound));
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    ApiResponse<string>.Fail("Pessoa não encontrada", HttpStatusCode.NotFound));
 
             var response = ApiResponse<PersonDetailsDto>.Ok(person);
             return StatusCode((int)response.StatusCode, response);
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(ApiResponse<Person>), 201)]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<string>>), 400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Create([FromBody] RegisterPersonDto personDto)
         {
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<IEnumerable<string>>.Fails(errors, HttpStatusCode.BadRequest));
+                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<IEnumerable<string>>.Fail(errors, HttpStatusCode.BadRequest));
             }
 
             try
@@ -65,41 +78,60 @@ namespace RegistrationPeople.API.Controllers.V1
             }
         }
 
+
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<string>), 200)] 
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<string>>), 400)]
+        [ProducesResponseType(typeof(ApiResponse<string>), 404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdatePersonDto personDto)
         {
             if (!ModelState.IsValid)
             {
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<IEnumerable<string>>.Fails(errors, HttpStatusCode.BadRequest));
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    ApiResponse<IEnumerable<string>>.Fail(errors, HttpStatusCode.BadRequest));
             }
 
             try
             {
                 await _personService.UpdateAsync(id, personDto);
-                return NoContent();
+                return Ok(ApiResponse<string>.Ok("Pessoa atualizada com sucesso"));
             }
             catch (KeyNotFoundException)
             {
-                return StatusCode((int)HttpStatusCode.NotFound, ApiResponse<string>.Fail("Pessoa não encontrada", HttpStatusCode.NotFound));
+                return StatusCode((int)HttpStatusCode.NotFound,
+                    ApiResponse<string>.Fail("Pessoa não encontrada", HttpStatusCode.NotFound));
             }
             catch (ArgumentException ex)
             {
-                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<string>.Fail(ex.Message, HttpStatusCode.BadRequest));
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    ApiResponse<string>.Fail(ex.Message, HttpStatusCode.BadRequest));
             }
             catch (Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, ApiResponse<string>.Fail("Erro interno: " + ex.Message, HttpStatusCode.InternalServerError));
+                return StatusCode((int)HttpStatusCode.InternalServerError,
+                    ApiResponse<string>.Fail("Erro interno: " + ex.Message, HttpStatusCode.InternalServerError));
             }
         }
 
+
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(ApiResponse<string>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<string>), 404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
                 await _personService.DeleteAsync(id);
-                return NoContent();
+                return Ok(ApiResponse<string>.Ok("Pessoa deletada com sucesso"));
             }
             catch (KeyNotFoundException)
             {

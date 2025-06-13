@@ -29,7 +29,7 @@ namespace RegistrationPeople.API.Controllers.V2
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<IEnumerable<string>>.Fails(errors, HttpStatusCode.BadRequest));
+                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<IEnumerable<string>>.Fail(errors, HttpStatusCode.BadRequest));
             }
 
             try
@@ -54,7 +54,7 @@ namespace RegistrationPeople.API.Controllers.V2
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<IEnumerable<string>>.Fails(errors, HttpStatusCode.BadRequest));
+                return StatusCode((int)HttpStatusCode.BadRequest, ApiResponse<IEnumerable<string>>.Fail(errors, HttpStatusCode.BadRequest));
             }
 
             try
