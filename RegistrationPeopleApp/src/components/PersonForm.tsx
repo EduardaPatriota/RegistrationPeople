@@ -75,7 +75,7 @@ const PersonForm = ({ person, onSubmit, onCancel }: PersonFormProps) => {
     try {
       const cleanCPF = formData.Cpf.replace(/\D/g, '');
       const dataToSend = { ...formData, Cpf: cleanCPF };
-
+      
       if (formData.Address && formData.Address.trim() !== '') {
         await onSubmit({ ...dataToSend, apiVersion: 'v2' } as any);
       } else {

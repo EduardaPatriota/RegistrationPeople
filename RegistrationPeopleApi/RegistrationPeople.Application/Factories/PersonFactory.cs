@@ -53,6 +53,9 @@ namespace RegistrationPeople.Application.Factories
             if (!string.IsNullOrWhiteSpace(updateDto.Cpf))
                 existingPerson.Cpf = updateDto.Cpf;
 
+            if (!string.IsNullOrWhiteSpace(updateDto.Address))
+                existingPerson.Address = updateDto.Address;
+
             existingPerson.UpdatedAt = DateTime.UtcNow;
         }
 
