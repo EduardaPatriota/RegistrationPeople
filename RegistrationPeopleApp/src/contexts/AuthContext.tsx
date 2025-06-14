@@ -91,9 +91,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoading(true);
     try {
       const data = await apiPost('/auth/login', { email, password });
-      const authToken = data['Token'];
-      console.log('Token recebido:', authToken);
-      
+      const authToken = data['Token'];      
       localStorage.setItem('authToken', authToken);
       setToken(authToken);
       await fetchUserData(authToken);
