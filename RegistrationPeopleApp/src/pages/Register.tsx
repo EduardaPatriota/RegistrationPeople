@@ -122,8 +122,9 @@ const Register = () => {
       });
 
       toast({
-        title: "Cadastro realizado com sucesso!",
-        description: "Bem-vindo! Você foi logado automaticamente.",
+        title: "Cadastro efetuado  com sucesso!",
+        description: "Seu cadastro foi realizado com sucesso. Agora você já pode acessar a plataforma.",
+
       });
       navigate('/dashboard');
     } catch (error) {
